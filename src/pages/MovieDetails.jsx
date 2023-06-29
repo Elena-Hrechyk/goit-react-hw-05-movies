@@ -1,6 +1,6 @@
 import { useParams, useLocation } from 'react-router-dom';
 import { fetchGetMovieDetails } from 'helpers/api';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Details from 'components/Details';
 import Loader from 'components/Loader';
@@ -63,26 +63,28 @@ const MovieDetails = () => {
       {error && <Error error={error} />}
 
       {!loading && !error && (
-        <Details
-          poster={poster}
-          title={titleMovie}
-          voteAverage={voteAverage}
-          annotation={annotation}
-          genres={movieGenres}
-        />
+        <>
+          <Details
+            poster={poster}
+            title={titleMovie}
+            voteAverage={voteAverage}
+            annotation={annotation}
+            genres={movieGenres}
+          />
+          <h3>Additional information:</h3>
+          <ListCastsReviews>
+            <ItemCastsReviews>
+              <LinkCastsReviews to="credits">Cast</LinkCastsReviews>
+            </ItemCastsReviews>
+            <ItemCastsReviews>
+              <LinkCastsReviews to="reviews">Reviews</LinkCastsReviews>
+            </ItemCastsReviews>
+          </ListCastsReviews>
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </>
       )}
-      <div>
-        <h3>Additional information:</h3>
-        <ListCastsReviews>
-          <ItemCastsReviews>
-            <LinkCastsReviews to="credits">Cast</LinkCastsReviews>
-          </ItemCastsReviews>
-          <ItemCastsReviews>
-            <LinkCastsReviews to="reviews">Reviews</LinkCastsReviews>
-          </ItemCastsReviews>
-        </ListCastsReviews>
-        <Outlet />
-      </div>
     </Main>
   );
 };

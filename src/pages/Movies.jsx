@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchKeywordSearchMovie } from 'helpers/api';
-import FormSearchMovies from 'components/FormSearchMovies';
-import Loader from 'components/Loader';
-import ListMovie from 'components/ListMovie';
-import Error from 'components/Error';
 import { Main } from './Pages.styled';
+import Loader from 'components/Loader';
+import Error from 'components/Error';
+
+const FormSearchMovies = lazy(() => import('../components/FormSearchMovies'));
+const ListMovie = lazy(() => import('../components/ListMovie'));
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
