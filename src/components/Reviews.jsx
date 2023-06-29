@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchGetMovieReviews } from 'helpers/api';
 import { ListReviews, ItemReview, Author, Content } from 'pages/Pages.styled';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [page] = useState(1);
   const { movieId } = useParams();
@@ -20,10 +20,6 @@ export const Reviews = () => {
     }
     getMovieReviews();
   }, [movieId, page]);
-
-  // const getCurrentPage = () => {
-  //   setPage(prevState => prevState + 1);
-  // };
 
   return (
     <ListReviews>
@@ -42,3 +38,5 @@ export const Reviews = () => {
     </ListReviews>
   );
 };
+
+export default Reviews;

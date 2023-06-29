@@ -20,7 +20,7 @@ import {
   LinkCastsReviews,
 } from './Pages.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [titleMovie, setTitelMovie] = useState('');
   const [description, setDescription] = useState('');
   const [poster, setPoster] = useState(null);
@@ -29,7 +29,6 @@ export const MovieDetails = () => {
   const { movieId } = useParams();
   const location = useLocation();
   const clickGoTo = useRef(location.state?.from ?? '/movies');
-  console.log(clickGoTo);
 
   useEffect(() => {
     async function getMovieDetails() {
@@ -97,3 +96,5 @@ export const MovieDetails = () => {
     </Main>
   );
 };
+
+export default MovieDetails;

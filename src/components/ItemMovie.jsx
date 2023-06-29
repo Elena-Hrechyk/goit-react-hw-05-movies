@@ -6,7 +6,7 @@ import {
   TitleMovieSearch,
 } from 'pages/Pages.styled';
 
-export const ItemMovie = ({ id, title, poster, location }) => {
+const ItemMovie = ({ id, title, poster, location }) => {
   return location.pathname === '/movies' ? (
     <ItemMovieSearch key={id}>
       <LinkMovie to={`${id}`} state={{ from: location }}>
@@ -37,3 +37,5 @@ export const ItemMovie = ({ id, title, poster, location }) => {
     </ItemMovieSearch>
   );
 };
+
+export default ItemMovie;

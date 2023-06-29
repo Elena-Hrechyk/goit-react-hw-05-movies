@@ -1,30 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { fetchTrendMovies } from 'helpers/api';
-import { Loader } from 'components/Loader';
-import { ListMovie } from 'components/ListMovie';
+import Loader from 'components/Loader';
+import ListMovie from 'components/ListMovie';
 import { Main, TitelMain } from './Pages.styled';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const abortCtrl = useRef();
 
   useEffect(() => {
     async function getTrendMovies() {
+      if (abortCtrl.current) {
+        abortCtrl.current.abort();
+      }
+      abortCtrl.current = new AbortController();
+
       try {
         setError(null);
         setLoading(true);
 
-        const trendMovies = await fetchTrendMovies();
+        const trendMovies = await fetchTrendMovies(abortCtrl);
 
         const { results } = trendMovies;
         if (!results.length) {
           setError('Ooops! Try again!');
         }
         setMovies(results);
-      } catch (error) {
-        if (error.code !== 'ERR_CANCELED') {
+      } catch (err) {
+        if (err.code !== 'ERR_CANCELED') {
           setError('Ooops! Try again!');
         }
       } finally {
@@ -32,6 +38,8 @@ export const Home = () => {
       }
     }
     getTrendMovies();
+
+    return () => abortCtrl.current.abort();
   }, []);
 
   return (
@@ -43,3 +51,5 @@ export const Home = () => {
     </Main>
   );
 };
+
+export default Home;

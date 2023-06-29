@@ -10,7 +10,7 @@ import {
   CastRole,
 } from '../pages/Pages.styled';
 
-export const Cast = () => {
+const Cast = () => {
   const [casts, setCasts] = useState([]);
   const { movieId } = useParams();
 
@@ -18,7 +18,7 @@ export const Cast = () => {
     async function getMovieCasts() {
       try {
         const dataCasts = await fetchGetMovieCredits(movieId);
-        console.log(dataCasts.data);
+
         setCasts(dataCasts.data.cast);
       } catch (err) {
         console.log(err);
@@ -48,3 +48,5 @@ export const Cast = () => {
     </CastsList>
   );
 };
+
+export default Cast;
