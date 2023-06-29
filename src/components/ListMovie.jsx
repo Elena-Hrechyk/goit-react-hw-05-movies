@@ -8,7 +8,7 @@ const ListMovie = ({ movies }) => {
     <ListMovies>
       {movies.map(({ id, title, poster_path }) => (
         <ItemMovie
-          key={id}
+          id={id}
           poster={poster_path}
           title={title}
           location={location}

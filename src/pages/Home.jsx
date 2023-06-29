@@ -30,7 +30,7 @@ const Home = () => {
         }
         setMovies(results);
       } catch (err) {
-        if (err.code !== 'ERR_CANCELED') {
+        if (err.code !== 'ERR_BAD_REQUEST') {
           setError('Ooops! Try again!');
         }
       } finally {
