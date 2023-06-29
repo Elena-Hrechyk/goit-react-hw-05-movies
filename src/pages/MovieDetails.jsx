@@ -2,19 +2,13 @@ import { useParams, useLocation } from 'react-router-dom';
 import { fetchGetMovieDetails } from 'helpers/api';
 import { useEffect, useState, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
+import Details from 'components/Details';
+import Loader from 'components/Loader';
+import Error from 'components/Error';
 import { Main } from './Pages.styled';
-import Placeholder from '../img/placeholder-612x612.jpg';
+
 import {
   LinkGoBack,
-  BoxMovieDetails,
-  TitleMovieDetails,
-  ImgMovieDetails,
-  ScoreMovieDetails,
-  Overview,
-  OverviewDescr,
-  Genres,
-  ListGenres,
-  ItemGenres,
   ListCastsReviews,
   ItemCastsReviews,
   LinkCastsReviews,
@@ -22,77 +16,73 @@ import {
 
 const MovieDetails = () => {
   const [titleMovie, setTitelMovie] = useState('');
-  const [description, setDescription] = useState('');
+  const [annotation, setAnnotation] = useState('');
   const [poster, setPoster] = useState(null);
   const [movieGenres, setMovieGenres] = useState([]);
   const [voteAverage, setVoteAverage] = useState(0);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { movieId } = useParams();
   const location = useLocation();
   const clickGoTo = useRef(location.state?.from ?? '/movies');
+  const abortCtrl = useRef();
 
   useEffect(() => {
     async function getMovieDetails() {
+      if (abortCtrl.current) {
+        abortCtrl.current.abort();
+      }
+      abortCtrl.current = new AbortController();
       try {
-        const movieDatails = await fetchGetMovieDetails(movieId);
+        setError(null);
+        setLoading(true);
+        const movieDatails = await fetchGetMovieDetails(movieId, abortCtrl);
         const { title, poster_path, genres, overview, vote_average } =
           movieDatails.data;
         setTitelMovie(title);
-        setDescription(overview);
+        setAnnotation(overview);
         setPoster(poster_path);
         setMovieGenres(genres);
         setVoteAverage(vote_average);
       } catch (err) {
-        console.log(err);
+        if (err.code !== 'ERR_BAD_REQUEST') {
+          setError('Ooops! Try again!');
+        }
+      } finally {
+        setLoading(false);
       }
     }
     getMovieDetails();
+    return () => abortCtrl.current.abort();
   }, [movieId]);
 
   return (
     <Main>
       <LinkGoBack to={clickGoTo.current}>Go back</LinkGoBack>
-      <BoxMovieDetails>
-        {poster ? (
-          <ImgMovieDetails
-            src={`https://image.tmdb.org/t/p/original${poster}`}
-            alt="Poster movie"
-          />
-        ) : (
-          <ImgMovieDetails
-            src={Placeholder}
-            alt="Poster movie"
-            height="448"
-            width="300"
-          />
-        )}
+      {loading && <Loader />}
+      {error && <Error error={error} />}
 
-        <div>
-          <TitleMovieDetails>{titleMovie}</TitleMovieDetails>
-          <ScoreMovieDetails>
-            Score: {(voteAverage * 10).toFixed()}%
-          </ScoreMovieDetails>
-          <Overview>
-            Overview:
-            <OverviewDescr>{description}</OverviewDescr>
-          </Overview>
-          <Genres>Genres:</Genres>
-          <ListGenres>
-            {movieGenres.map(({ id, name }) => {
-              return <ItemGenres key={id}>{name}</ItemGenres>;
-            })}
-          </ListGenres>
-        </div>
-      </BoxMovieDetails>
-      <h3>Additional information:</h3>
-      <ListCastsReviews>
-        <ItemCastsReviews>
-          <LinkCastsReviews to="credits">Cast</LinkCastsReviews>
-        </ItemCastsReviews>
-        <ItemCastsReviews>
-          <LinkCastsReviews to="reviews">Reviews</LinkCastsReviews>
-        </ItemCastsReviews>
-      </ListCastsReviews>
-      <Outlet />
+      {!loading && !error && (
+        <Details
+          poster={poster}
+          title={titleMovie}
+          voteAverage={voteAverage}
+          annotation={annotation}
+          genres={movieGenres}
+        />
+      )}
+      <div>
+        <h3>Additional information:</h3>
+        <ListCastsReviews>
+          <ItemCastsReviews>
+            <LinkCastsReviews to="credits">Cast</LinkCastsReviews>
+          </ItemCastsReviews>
+          <ItemCastsReviews>
+            <LinkCastsReviews to="reviews">Reviews</LinkCastsReviews>
+          </ItemCastsReviews>
+        </ListCastsReviews>
+        <Outlet />
+      </div>
     </Main>
   );
 };

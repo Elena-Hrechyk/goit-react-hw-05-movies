@@ -22,23 +22,26 @@ export const fetchKeywordSearchMovie = async (value, abortCtrl) => {
   return resps.data;
 };
 
-export const fetchGetMovieDetails = async id => {
+export const fetchGetMovieDetails = async (id, abortCtrl) => {
   const resps = await axios.get(`/3/movie/${id}`, {
+    signal: abortCtrl.signal,
     params: { api_key: API_KEY },
   });
   return resps;
 };
 
-export const fetchGetMovieCredits = async id => {
+export const fetchGetMovieCredits = async (id, abortCtrl) => {
   const resps = await axios.get(`/3/movie/${id}/credits`, {
+    signal: abortCtrl.signal,
     params: { api_key: API_KEY },
   });
   return resps;
 };
 
-export const fetchGetMovieReviews = async (id, currentPage) => {
+export const fetchGetMovieReviews = async (id, abortCtrl) => {
   const resps = await axios.get(`/3/movie/${id}/reviews`, {
-    params: { api_key: API_KEY, page: currentPage },
+    signal: abortCtrl.signal,
+    params: { api_key: API_KEY, page: 1 },
   });
   return resps;
 };
