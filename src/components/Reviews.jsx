@@ -5,7 +5,7 @@ import { ListReviews, ItemReview, Author, Content } from 'pages/Pages.styled';
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -21,9 +21,9 @@ export const Reviews = () => {
     getMovieReviews();
   }, [movieId, page]);
 
-  const getCurrentPage = () => {
-    setPage(prevState => prevState + 1);
-  };
+  // const getCurrentPage = () => {
+  //   setPage(prevState => prevState + 1);
+  // };
 
   return (
     <ListReviews>
