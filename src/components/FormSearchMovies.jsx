@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { SearchForm, ButtonSearch, InputSearch } from 'pages/Pages.styled';
@@ -33,6 +34,10 @@ const FormSearchMovies = ({ onSearch }) => {
       </SearchForm>
     </Formik>
   );
+};
+
+FormSearchMovies.prototype = {
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default FormSearchMovies;

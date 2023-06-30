@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import ItemMovie from './ItemMovie';
 import { ListMovies } from 'pages/Pages.styled';
@@ -16,5 +17,15 @@ const ListMovie = ({ movies }) => {
       ))}
     </ListMovies>
   );
+};
+
+ListMovie.prototype = {
+  movies: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      poster_path: PropTypes.string.isRequired,
+    })
+  ),
 };
 export default ListMovie;

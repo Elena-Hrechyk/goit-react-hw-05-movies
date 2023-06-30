@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Placeholder from '../img/placeholder-612x612.jpg';
 
 import {
@@ -46,6 +47,18 @@ const Details = ({ poster, title, voteAverage, annotation, genres }) => {
       </div>
     </BoxMovieDetails>
   );
+};
+
+Details.prototype = {
+  title: PropTypes.string.isRequired,
+  voteAverage: PropTypes.number.isRequired,
+  annotation: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default Details;

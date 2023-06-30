@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Placeholder from 'img/placeholder-612x612.jpg';
 import {
   ItemMovieSearch,
@@ -36,6 +37,13 @@ const ItemMovie = ({ id, title, poster, location }) => {
       </LinkMovie>
     </ItemMovieSearch>
   );
+};
+
+ItemMovie.prototypev = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
+  location: PropTypes.object,
 };
 
 export default ItemMovie;

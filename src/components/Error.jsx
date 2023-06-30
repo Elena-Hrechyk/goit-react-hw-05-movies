@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import SadRobot from 'img/sad-robot-623x416.jpg';
 import { BoxError, TitleError, ImgError } from 'pages/Pages.styled';
 
@@ -8,6 +9,10 @@ const Error = ({ error }) => {
       <ImgError src={SadRobot} alt="Sad robot" width="400" />
     </BoxError>
   );
+};
+
+Error.prototype = {
+  error: PropTypes.string.isRequired,
 };
 
 export default Error;
