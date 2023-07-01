@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { SearchForm, ButtonSearch, InputSearch } from 'pages/Pages.styled';
+import { SearchForm, ButtonSearch, InputSearch } from './FormSearchMovies.styled';
 
 const schema = yup.object().shape({
   search: yup.string().required(),

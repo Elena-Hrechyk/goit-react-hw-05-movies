@@ -5,7 +5,7 @@ import {
   ImgMovieSearch,
   LinkMovie,
   TitleMovieSearch,
-} from 'pages/Pages.styled';
+} from './ItemMovie.styled';
 
 const ItemMovie = ({ id, title, poster, location }) => {
   return location.pathname === '/movies' ? (

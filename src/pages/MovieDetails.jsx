@@ -5,9 +5,8 @@ import { Outlet } from 'react-router-dom';
 import Details from 'components/Details';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
-import { Main } from './Pages.styled';
-
 import {
+  Main,
   LinkGoBack,
   ListCastsReviews,
   ItemCastsReviews,

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchGetMovieReviews } from 'helpers/api';
 import Error from './Error';
-import { ListReviews, ItemReview, Author, Content } from 'pages/Pages.styled';
+import { ListReviews, ItemReview, Author, Content } from './Reviews.styled';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);

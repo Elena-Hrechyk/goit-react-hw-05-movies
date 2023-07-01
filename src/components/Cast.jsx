@@ -9,7 +9,7 @@ import {
   CastImg,
   CastName,
   CastRole,
-} from '../pages/Pages.styled';
+} from './Cast.styled';
 
 const Cast = () => {
   const [casts, setCasts] = useState([]);

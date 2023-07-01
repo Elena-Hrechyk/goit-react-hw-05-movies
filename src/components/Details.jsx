@@ -11,7 +11,7 @@ import {
   Genres,
   ListGenres,
   ItemGenres,
-} from 'pages/Pages.styled';
+} from './Details.styled';
 
 const Details = ({ poster, title, voteAverage, annotation, genres }) => {
   return (
